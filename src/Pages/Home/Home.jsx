@@ -16,8 +16,8 @@ export const Home = () => {
             <ul>
               <li>Home</li>
               <li>Shop</li>
-              <li>Ebooks</li>
-              <li>Membership</li>
+              <li>About us</li>
+              
             </ul>
           </nav>
         </header>

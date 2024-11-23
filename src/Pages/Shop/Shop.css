@@ -1,0 +1,123 @@
+.first {
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .category-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .category-btn:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .book-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .book-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .book-image {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .book-info {
+    padding: 15px;
+  }
+  
+  .book-title {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .book-author {
+    color: #555;
+  }
+  
+  .book-rating {
+    margin: 10px 0;
+  }
+  
+  .book-price {
+    font-size: 16px;
+  }
+  
+  .price {
+    color: #28a745;
+    font-weight: bold;
+  }
+  
+  .original-price {
+    text-decoration: line-through;
+    color: #888;
+    margin-left: 10px;
+  }
+  
+  .discount {
+    color: #ff6347;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+  
+  .buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .view-detail-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .add-to-cart-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #218838;
+  }
+  
+  .about-btn {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .about-btn:hover {
+    background-color: #e60000;
+  }
+  
