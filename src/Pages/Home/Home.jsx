@@ -1,47 +1,46 @@
-import React from 'react'
+import React from "react";
 import "./Home.css";
 import PIC from "./10631816.jpg";
 import PIC2 from "./9ff1023a-a120-445a-91f4-f513843e80a4.png";
+import person1 from "./person1.jpg";
+import person2 from "./person2.jpg";
+import { useNavigate } from "react-router-dom";
+import person3 from "./person3.jpg";
 
-export const Home = () => {
+
+const Home = () => {
+  const navigate = useNavigate();
+
+  const handleExploreClick = () => {
+    navigate("/shop");
+  };
   return (
-    <>
-    <div className="container">
-      <div className="left-side">
-      <header className="navbar">
-          <div className="logo">
-            <h1 className='font'>BOOK STORE</h1>
-          </div>
-          <nav className="nav">
-            <ul>
-              <li>Home</li>
-              <li>Shop</li>
-              <li>About us</li>
-              
-            </ul>
-          </nav>
-        </header>
-        <div className="hero">
-          <h2 className='font'>What Book Are You Looking For</h2>
-          <img src={PIC2} alt="book" />
-          <p>Not Sure What to read Next? Explore Our Catalog of public Domain Books With Our Editors</p>
-          <button>Explore now</button>
+    <div className="home-container">
+      <div className="home-left">
+        <div className="home-hero">
+          <h2 className="home-title">What Book Are You Looking For</h2>
+          <img src={PIC2} alt="book" className="home-hero-image" />
+          <p className="home-description">
+            Not Sure What to read Next? Explore Our Catalog of Public Domain
+            Books With Our Editors.
+          </p>
+          <button className="home-button" onClick={handleExploreClick}>Explore now</button>
         </div>
-        <div className="community">
-          <h3>OUR COMMUNITY</h3>
-          <div className="people">
-            <img src="person1.png" alt="person1" />
-            <img src="person2.png" alt="person2" />
-            <img src="person3.png" alt="person3" />
+        <div className="home-community">
+          <h3 className="home-community-title">OUR COMMUNITY</h3>
+          <div className="home-community-images">
+            <img src={person1} alt="person1" className="home-community-img" />
+            <img src={person2} alt="person2" className="home-community-img" />
+            <img src={person3} alt="person3" className="home-community-img" />
           </div>
-          <p>40K+ Book lovers joined</p>
+          <p className="home-community-text">40K+ Book lovers joined</p>
         </div>
       </div>
-      <div className="right-side">
-        <img className='half_page' src={PIC} alt="Book" />
-        
+      <div className="home-right">
+        <img className="home-full-image" src={PIC} alt="Book" />
       </div>
     </div>
-    </>
-  )
-}
+  );
+};
+
+export default Home;
