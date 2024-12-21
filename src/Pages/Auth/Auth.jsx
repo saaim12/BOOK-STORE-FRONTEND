@@ -5,7 +5,6 @@ import './Auth.css';
 
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true);
-
     const toggleForm = () => {
         setIsLogin(!isLogin);
     };

@@ -1,232 +1,190 @@
-// src/Pages/Shop/BookShop.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star } from 'lucide-react';
 import './Shop.css';
+import { useCart } from '../useContext/cartContext';
+
 
 const renderStars = (rating) => {
   return Array.from({ length: 5 }, (_, index) => (
-    <Star 
-      key={index} 
-      className={`w-5 h-5 ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
-      fill={index < rating ? 'currentColor' : 'none'}
+    <Star
+      key={index}
+      className={`w-5 h-5 ${index < rating ? 'yellow' : 'text-gray-300'}`}
+      fill={index < rating ? 'yellow' : 'none'}
     />
   ));
 };
-const books = [
-  {
-    title: "Aylak Adam",
-    author: "Yusuf Atılgan",
-    publisher: "CAN YAYINLARI",
-    pages: 192,
-    language: "TÜRKÇE",
-    discount: "62%",
-    price: 12.38,
-    originalPrice: 33,
-    rating: 4,
-    stock: 2627,
-    coverType: "Karton Kapak",
-    paperType: "Kitap Kağıdı",
-    isbn: "9789750000000",
-    publishDate: "2019-08-06",
-    url: "https://www.kitapyurdu.com/kitap/aylak-adam/434326.html&path=1",
-    imageUrl: "https://img.kitapyurdu.com/v1/getImage/fn:11438831/wi:100/wh:true",
-  },
-  {
-    title: "Delifişek",
-    author: "Jose Mauro De Vasconcelos",
-    publisher: "CAN YAYINLARI",
-    pages: 88,
-    language: "TÜRKÇE",
-    discount: "64%",
-    price: 9.42,
-    originalPrice: 26,
-    rating: 5,
-    stock: 3541,
-    coverType: "Karton Kapak",
-    paperType: "3. Hm. Kağıt",
-    isbn: "9789750000000",
-    publishDate: "2019-08-06",
-    url: "https://www.kitapyurdu.com/kitap/delifisek/13565.html&path=1",
-    imageUrl: "https://img.kitapyurdu.com/v1/getImage/fn:11482568/wi:100/wh:true",
-  },
-  {
-    title: "Pal Sokağı Çocukları",
-    author: "Ferenc Molnar",
-    publisher: "YAPI KREDİ YAYINLARI",
-    pages: 235,
-    language: "TÜRKÇE",
-    discount: "40%",
-    price: 17.96,
-    originalPrice: 30,
-    rating: 5,
-    stock: 3026,
-    coverType: "Karton Kapak",
-    paperType: "Kitap Kağıdı",
-    isbn: "9789750000000",
-    publishDate: "2021-10-08",
-    url: "https://www.kitapyurdu.com/kitap/pal-sokagi-cocuklari/125370.html&path=1",
-    imageUrl: "https://img.kitapyurdu.com/v1/getImage/fn:1030555/wi:100/wh:true",
-  },
-  {
-    title: "İnce Memed 1",
-    author: "Yaşar Kemal",
-    publisher: "YAPI KREDİ YAYINLARI",
-    pages: 436,
-    language: "TÜRKÇE",
-    discount: "49%",
-    price: 22.95,
-    originalPrice: 45,
-    rating: 5,
-    stock: 3677,
-    coverType: "Karton Kapak",
-    paperType: "Kitap Kağıdı",
-    isbn: "9789750000000",
-    publishDate: "2021-12-27",
-    url: "https://www.kitapyurdu.com/kitap/ince-memed-1/57300.html&path=1",
-    imageUrl: "https://img.kitapyurdu.com/v1/getImage/fn:6663013/wi:100/wh:true",
-  },
-  {
-    title: "Babaannem Geri Döndü",
-    author: "Şermin Yaşar",
-    publisher: "TAZE KİTAP",
-    pages: 160,
-    language: "TÜRKÇE",
-    discount: "37%",
-    price: 39.22,
-    originalPrice: 62,
-    rating: 5,
-    stock: 245,
-    coverType: "Karton Kapak",
-    paperType: "Kitap Kağıdı",
-    isbn: "9786060000000",
-    publishDate: "2021-04-12",
-    url: "https://www.kitapyurdu.com/kitap/babaannem-geri-dondu/578116.html&path=1",
-    imageUrl: "https://img.kitapyurdu.com/v1/getImage/fn:11396589/wi:100/wh:true",
-  },
-  {
-    title: "İyileşen Evliliğim",
-    author: "Hatice Kübra Tongar",
-    publisher: "HAYY KİTAP",
-    pages: 200,
-    language: "TÜRKÇE",
-    discount: "40%",
-    price: 19.18,
-    originalPrice: 32,
-    rating: 5,
-    stock: 111,
-    coverType: "Karton Kapak",
-    paperType: "Kitap Kağıdı",
-    isbn: "9786260000000",
-    publishDate: "2021-10-25",
-    url: "https://www.kitapyurdu.com/kitap/iyilesen-evliligim/597416.html&path=1",
-    imageUrl: "https://img.kitapyurdu.com/v1/getImage/fn:11469116/wi:100/wh:true",
-  },
-  {
-    title: "Gerçek Tıp & Yitik Şifanın İzinde",
-    author: "Aidin Salih",
-    publisher: "YİTİK ŞİFA",
-    pages: 432,
-    language: "TÜRKÇE",
-    discount: "31%",
-    price: 51.96,
-    originalPrice: 75,
-    rating: 5,
-    stock: 2254,
-    coverType: "Karton Kapak",
-    paperType: "Kitap Kağıdı",
-    isbn: "9786060000000",
-    publishDate: "2017-02-23",
-    url: "https://www.kitapyurdu.com/kitap/gercek-tip-amp-yitik-sifanin-izinde/409003.html&path=1",
-    imageUrl: "https://img.kitapyurdu.com/v1/getImage/fn:2465557/wi:100/wh:true",
-  },
-  {
-    title: "Kuyucaklı Yusuf",
-    author: "Sabahattin Ali",
-    publisher: "YAPI KREDİ YAYINLARI",
-    pages: 221,
-    language: "TÜRKÇE",
-    discount: "42%",
-    price: 5.26,
-    originalPrice: 9,
-    rating: 5,
-    stock: 10224,
-    coverType: "Karton Kapak",
-    paperType: "Kitap Kağıdı",
-    isbn: "9789750000000",
-    publishDate: "2019-08-06",
-    url: "https://www.kitapyurdu.com/kitap/kuyucakli-yusuf/62333.html&path=1",
-    imageUrl: "https://img.kitapyurdu.com/v1/getImage/fn:1105919/wi:100/wh:true",
-  },
-  {
-    title: "Tutunamayanlar / Bütün Eserleri 1",
-    author: "Oğuz Atay",
-    publisher: "İLETİŞİM YAYINLARI",
-    pages: 724,
-    language: "TÜRKÇE",
-    discount: "40%",
-    price: 47.02,
-    originalPrice: 78,
-    rating: 5,
-    stock: 5528,
-    coverType: "Karton Kapak",
-    paperType: "Kitap Kağıdı",
-    isbn: "9789750000000",
-    publishDate: "2022-01-27",
-    url: "https://www.kitapyurdu.com/kitap/tutunamayanlar--butun-eserleri-1/18252.html&path=1",
-    imageUrl: "https://img.kitapyurdu.com/v1/getImage/fn:11462655/wi:100/wh:true",
-  },
-  {
-    title: "Yüzyıllık Yalnızlık (Ciltsiz)",
-    author: "Gabriel Garcia Marquez",
-    publisher: "CAN YAYINLARI",
-    pages: 464,
-    language: "TÜRKÇE",
-    discount: "47%",
-    price: 43.91,
-    originalPrice: 83,
-    rating: 4,
-    stock: 5710,
-    coverType: "Karton Kapak",
-    paperType: "Kitap Kağıdı",
-    isbn: "9789750000000",
-    publishDate: "2019-09-24",
-    url: "https://www.kitapyurdu.com/kitap/yuzyillik-yalnizlik-ciltsiz/10049.html&path=1",
-    imageUrl: "https://img.kitapyurdu.com/v1/getImage/fn:11437413/wi:100/wh:true",
-  },
-];
 
 const Shop = () => {
+  const { addToCart } = useCart();
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [hoveredBookId, setHoveredBookId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const booksPerPage = 20;
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/books/allbooks?page=${currentPage}&limit=${booksPerPage}`);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+        setBooks(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBooks();
+  }, [currentPage]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  const nextPage = () => setCurrentPage((prevPage) => prevPage + 1);
+  const prevPage = () => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+
+
+  
+  
+  const handleAddToCart = (book) => {
+   
+
+    const orderData = {
+      book_id: book._id, 
+      title: book.title,
+      quantity: 1,
+      price: book.price,
+      image:book.image,
+      
+    };
+
+    // Add book to cart using the global state
+    addToCart(orderData);
+    alert(`${book.title} has been added to your cart!`);
+  };
+  
+  
   return (
-    <div className="bookshop-container">
-      <section className="bestsellers">
-        <h2 className="bestsellers-title">Explore Our Books</h2>
-        <div className="books-grid">
-          {books.map((book) => (
-            <div key={book.title} className="book-card">
-              <img src={book.imageUrl} alt={book.title} className="book-image" />
-              <div className="book-details">
-                <h3 className="book-title">{book.title}</h3>
-                <p className="book-author">{book.author}</p>
-                <div className="rating">
-                  {renderStars(book.rating)}
-                  <span className="rating-text">({book.rating}/5)</span>
-                </div>
-                <div className="price-section">
-                  <span className="current-price">${book.price.toFixed(2)}</span>
-                  <span className="original-price">${book.originalPrice.toFixed(2)}</span>
-                </div>
-                <button className="add-to-cart-button">Add to Cart</button>
+    <>
+      <h2 className="bestsellers-title">Explore Our Books</h2>
+      <div className="books-grid">
+        {books.map((book) => (
+          <div
+            className="product-card"
+            key={book._id}
+            onMouseEnter={() => setHoveredBookId(book._id)}
+            onMouseLeave={() => setHoveredBookId(null)}
+          >
+            <div className="img-sec">
+              <img src={book.image} alt={book.title} />
+            </div>
+            <div className="info-sec">
+              <h3 className="book-title">{book.title}</h3>
+              <p className="book-author">{book.author}</p>
+              <div className="rating">
+                {renderStars(book.rating)}
+                <span className="rating-text">({book.rating}/5)</span>
+              </div>
+              <div className="price-section">
+                <span className="current-price">
+                  Discounted Price: ${book.discounted_price.toFixed(2)}
+                </span>
+                <span className="original-price">
+                  Original Price: ${book.price.toFixed(2)}
+                </span>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
 
-     
+            {hoveredBookId === book._id && (
+              <div className="book-dialog">
+                <div className="book-dialog-content">
+                  <h4>Book Details</h4>
+                  <p><strong>Author:</strong> {book.author}</p>
+                  <p><strong>Publisher:</strong> {book.publisher}</p>
+                  <p><strong>Language:</strong> {book.language}</p>
+                  <p><strong>Pages:</strong> {book.page}</p>
+                  <p><strong>Paper Type:</strong> {book.paper}</p>
+                  <p><strong>ISBN:</strong> {book.isbn}</p>
+                  <p><strong>Stock:</strong> {book.stock}</p>
+                  <p><strong>Rating:</strong> {book.rating}</p>
+                  <p><strong>Discount Rate:</strong> {book.discount_rate}</p>
+                  <p><strong>Published Date:</strong> {new Date(book.date).toLocaleDateString()}</p>
+                  <a href={book.link} target="_blank" rel="noopener noreferrer">View on Other Store</a>
+                  <div><button className="add-to-cart-button" onClick={() => handleAddToCart(book)}>Add to Cart</button></div>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="pagination-controls">
+        <button onClick={prevPage} disabled={currentPage === 1} className="pagination-button prev-button">
+          Previous
+        </button>
+        <button onClick={nextPage} disabled={books.length < booksPerPage} className="pagination-button next-button">
+          Next
+        </button>
+      </div>
+
       <footer className="footer">
+      <div className="footer-section">
+        <div className="footer-column">
+          <h4>Information</h4>
+          <ul>
+            <li>Covid-19: Delivery & Safety</li>
+            <li>How to avail bank discounts</li>
+            <li>Privacy Policy</li>
+            <li>Returns and Exchange Policy</li>
+            <li>About Us</li>
+            <li>Our Bookstores</li>
+            <li>Shipping & Delivery</li>
+            <li>Bulk Order Queries</li>
+            <li>Terms & Conditions</li>
+            <li>Careers</li>
+          </ul>
+        </div>
+
+        <div className="footer-column">
+          <h4>New Features</h4>
+          <ul>
+            <li>Send E-Gift Card</li>
+            <li>Track Your Order</li>
+            <li>Track Requested Book</li>
+            <li>Blogs</li>
+          </ul>
+        </div>
+
+        <div className="footer-column">
+          <h4>Customer Support</h4>
+          <ul>
+            <li>Returns</li>
+            <li>Contact Us</li>
+            <li>Site Map</li>
+          </ul>
+        </div>
+
+        <div className="footer-column">
+          <h4>Contact Us</h4>
+          <p>For complaints and feedback:</p>
+          <p>query@onbook.com</p>
+          <div className="social-icons">
+            <span>🌐</span> {/* Replace with actual icons */}
+            <span>📘</span>
+            <span>🐦</span>
+          </div>
+        </div>
+      </div>
+      <div className="footer-bottom">
         <p>&copy; 2024 On.Book. All rights reserved.</p>
-      </footer>
-    </div>
+      </div>
+    </footer>
+    </>
   );
 };
 

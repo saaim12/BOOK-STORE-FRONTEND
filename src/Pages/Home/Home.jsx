@@ -11,9 +11,6 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
 
-  const handleExploreClick = () => {
-    navigate("/shop");
-  };
 
   return (
     <div className="home">
@@ -25,7 +22,7 @@ const Home = () => {
             Not sure what to read next? Explore our catalog of public domain
             books curated by our editors.
           </p>
-          <button className="home__button" onClick={handleExploreClick}>
+          <button className="home__button" onClick={()=>{navigate("/shop");}}>
             Explore Now
           </button>
         </div>
